@@ -1,5 +1,7 @@
 # README
 
+[![](https://badge.imagelayers.io/softwarecraftsmen/atlassian-confluence:latest.svg)](https://imagelayers.io/?images=softwarecraftsmen/atlassian-confluence:latest)
+
 ## Prepare a docker host
 
 ```sh
