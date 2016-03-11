@@ -18,7 +18,7 @@ eval `docker-machine env atlassian` <3>
 
 ```sh
 docker pull softwarecraftsmen/atlassian-confluence
-docker run -d --name confluence -p 8090:8090 atlassian-confluence
+docker run -d --name confluence -p 8090:8090 softwarecraftsmen/atlassian-confluence
 ```
 
 Startup after creating a container takes some time as the installation and configuration process is continuing. So be patient until the start page for license registration can be opened.
