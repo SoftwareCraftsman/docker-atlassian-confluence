@@ -14,6 +14,12 @@ eval `docker-machine env atlassian` <3>
 2. Start the docker machine
 3. Setup the docker client to use the docker-machine
 
+## Build the image
+
+```sh
+docker build -t softwarecraftsmen/atlassian-confluence .
+```
+
 ## Run a Confluence instance
 
 ```sh
