@@ -1,7 +1,7 @@
 FROM buildpack-deps:trusty
 MAINTAINER Software Craftsmen GmbH & Co KG <office@software-craftsmen.at>
 
-ENV CONFLUENCE_VERSION=5.9.5-x64
+ENV CONFLUENCE_VERSION=6.3.1-x64
 
 RUN wget --no-verbose https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-$CONFLUENCE_VERSION.bin -O atlassian-confluence-$CONFLUENCE_VERSION.bin && \
     chmod a+x atlassian-confluence-$CONFLUENCE_VERSION.bin
