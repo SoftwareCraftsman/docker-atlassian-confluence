@@ -1,0 +1,25 @@
+version: "2.1"
+
+services:
+
+  postgresdb:
+    image: ${DOCKER_REGISTRY}atlassian-confluence-postgresdb:${CONFLUENCE_TAG}
+    build:
+      context: ./postgresdb
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - CONFLUENCE_JDBC_USER
+      - CONFLUENCE_JDBC_PASSWORD
+    restart: unless-stopped
+    stop_grace_period: 1m0s
+    volumes:
+      - data:/var/lib/postgresql/data
+
+volumes:
+  data:
+    driver: local

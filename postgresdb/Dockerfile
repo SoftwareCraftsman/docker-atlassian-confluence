@@ -1,5 +1,4 @@
-FROM softwarecraftsmen/oracle-java:8-jdk
-MAINTAINER Software Craftsmen GmbH & Co KG <office@software-craftsmen.at>
+FROM postgres:9.6
 
 ARG "version=unknown"
 ARG "build_date=unknown"
@@ -25,27 +24,5 @@ RUN if [ ! "${http_proxy}" = "" ] ; then echo "Acquire::http::Proxy \"${http_pro
     if [ ! "${http_proxy}" = "" ] ; then echo "http_proxy=${http_proxy}" >> /etc/wgetrc; fi && \
     if [ ! "${https_proxy}" = "" ] ; then echo "https_proxy=${https_proxy}" >> /etc/wgetrc; fi
 
-ARG CONFLUENCE_VERSION=6.3.2
-
-RUN wget --no-verbose https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin -O atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin && \
-    chmod a+x atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin
-
-# Run the installer
-# The response file is produced by an attended installation at /opt/atlassian/confluence/.install4j/response.varfile
-COPY response.varfile response.varfile
-# Run unattended installation with input from response.varfile
-RUN ./atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin -q -varfile response.varfile && \
-    rm atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin
-
-RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends gettext && \
-    rm -rf /var/lib/apt/lists/*
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x docker-entrypoint.sh
-
-# HTTP port
-EXPOSE 8090
-# Control port
-EXPOSE 8000
-
-ENTRYPOINT /docker-entrypoint.sh
+ADD initdb.sh /docker-entrypoint-initdb.d/initdb.sh
+RUN chmod +x /docker-entrypoint-initdb.d/initdb.sh

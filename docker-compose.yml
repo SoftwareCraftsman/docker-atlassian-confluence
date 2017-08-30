@@ -2,8 +2,17 @@ version: "2.1"
 
 services:
   server:
-    build: ./
+    build:
+      context: ./
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
     image: softwarecraftsmen/atlassian-confluence:${CONFLUENCE_TAG}
+    environment:
+      - CONFLUENCE_JDBC_USER
+      - CONFLUENCE_JDBC_PASSWORD
+      - CONFLUENCE_LICENSE
     ports:
       - ${CONFLUENCE_HTTP_PORT}:8090
     restart: unless-stopped
@@ -11,3 +20,9 @@ services:
     healthcheck:
       test: ["CMD", "curl", "-f", "http://server:8090/"]
       timeout: 5s
+    volumes:
+      - home:/var/atlassian/application-data/confluence
+
+volumes:
+  home:
+    driver: local
