@@ -3,7 +3,7 @@ version: "2.1"
 services:
   server:
     build:
-      context: ./
+      context: ./server
       args:
         - http_proxy
         - https_proxy
