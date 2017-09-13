@@ -1,0 +1,19 @@
+version: "2.1"
+
+services:
+
+  proxy:
+    build: ./proxy
+    image: ${DOCKER_REGISTRY}atlassian-confluence-nginx:${CONFLUENCE_TAG}
+    restart: always
+    ports:
+      - ${NGINX_HTTP_PORT}:80
+    environment:
+      - NGINX_SERVER_NAME
+      - NGINX_TEMPLATE
+      - CONFLUENCE_CONTEXT_PATH
+    depends_on:
+      - server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://proxy/${CONFLUENCE_CONTEXT_PATH}"]
+      timeout: 5s

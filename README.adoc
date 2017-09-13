@@ -1,0 +1,105 @@
+= README
+
+== Setup
+
+[source,sh]
+----
+docker-machine create --driver virtualbox atlassian <1>
+docker-machine start atlassian <2>
+eval `docker-machine env atlassian` <3>
+----
+
+1. Create a docker machine (once only)
+2. Start the docker machine
+3. Setup the docker client to use the docker-machine
+
+The defaults configured by `docker-compose.yml` and `postgresdb.yml` will give us a Confluence container and a Postgresdb container.
+
+[source,sh]
+.`.env`
+----
+COMPOSE_PROJECT_NAME=confluence
+COMPOSE_FILE=docker-compose.yml:postgresdb.yml
+COMPOSE_HTTP_TIMEOUT=300
+
+CONFLUENCE_HTTP_PORT=18090
+CONFLUENCE_TAG=6.3.2
+CONFLUENCE_JDBC_USER=***
+CONFLUENCE_JDBC_PASSWORD=***
+
+POSTGRES_USER=***
+POSTGRES_PASSWORD=***
+----
+
+== Build the image
+
+[source, sh]
+----
+docker-compose build
+----
+
+== Run a Confluence instance
+
+[source, bash]
+----
+docker-compose up -d
+----
+
+Startup after creating a container takes some time as the installation and configuration process is continuing.
+So be patient until the start page for finishing the installation.
+You will have to connect the Confluence instance to the Postgresdb instance and add the license details.
+
+To open the Confluence start page, on Mac OSX run `open http://$(docker-machine ip atlassian):8090`
+
+Once a license has been installed into the server it is bound to the server's ID.
+The license and server ID can be retrieved through http://my.atlassian.com.
+So when creating a new container and a valid license still exist the server ID can be set with `confluence.cfg.xml` in the confluence home dir (`/var/atlassian/application-data/confluence`).
+
+== More configuration options
+
+=== The context path
+
+[source, sh]
+----
+CONFLUENCE_CONTEXT_PATH=confluence <1>
+----
+<1> Without leading and trailing /
+
+=== NGINX as proxy
+
+.http proxy
+[source, bash]
+----
+COMPOSE_FILE=docker-compose.yml:postgresdb.yml:nginx.yml
+NGINX_SERVER_NAME=qvv.software-craftsmen.at
+NGINX_HTTP_PORT=80
+----
+
+.https proxy
+[source, bash]
+----
+COMPOSE_FILE=docker-compose.yml:postgresdb.yml:nginx.yml:nginx-ssl.yml
+NGINX_SERVER_NAME=qvv.software-craftsmen.at
+NGINX_HTTP_PORT=80
+NGINX_HTTPS_PORT=443
+----
+
+A https proxy further requires a X.509 certificate and private key file in the following locations:
+
+[source, bash]
+----
+./.ssl/${NGINX_SERVER_NAME}.crt
+./.ssl/${NGINX_SERVER_NAME}.key
+----
+
+Both files will be mounted into the proxy container as volumes.
+Their basename must match the configured `${NGINX_SERVER_NAME}`.
+
+A self-signed certificate and key pair can be generated using the `generate-ssl-certificate` container.
+This requires a X.509 certificate subject to be configured.
+
+[source, bash]
+----
+export X509_CERTIFICATE_SUBJECT=/C=AT/OU=Software Craftsmen Gmbh & CoKG/L=Vienna/emailAddress=office@software-craftsmen.at
+docker-compose -f ssl-certificate.yml run generate-ssl-certificate
+----

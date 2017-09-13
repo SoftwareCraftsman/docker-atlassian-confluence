@@ -13,12 +13,14 @@ services:
       - CONFLUENCE_JDBC_USER
       - CONFLUENCE_JDBC_PASSWORD
       - CONFLUENCE_LICENSE
+      - NGINX_SERVER_NAME
+      - CONFLUENCE_CONTEXT_PATH
     ports:
       - ${CONFLUENCE_HTTP_PORT}:8090
     restart: unless-stopped
     stop_grace_period: 1m0s
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://server:8090/"]
+      test: ["CMD", "curl", "-f", "http://server:8090/${CONFLUENCE_CONTEXT_PATH}"]
       timeout: 5s
     volumes:
       - home:/var/atlassian/application-data/confluence

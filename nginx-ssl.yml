@@ -1,0 +1,13 @@
+version: "2.1"
+
+services:
+
+  proxy:
+    ports:
+      - ${NGINX_HTTPS_PORT}:443
+    healthcheck:
+      test: ["CMD", "curl", "-f", "--insecure", "https://proxy/${CONFLUENCE_CONTEXT_PATH}"]
+      timeout: 5s
+    volumes:
+      - ./.ssl/${NGINX_SERVER_NAME}.crt:/etc/ssl/certs/${NGINX_SERVER_NAME}.crt
+      - ./.ssl/${NGINX_SERVER_NAME}.key:/etc/ssl/private/${NGINX_SERVER_NAME}.key

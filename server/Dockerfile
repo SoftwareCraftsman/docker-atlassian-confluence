@@ -9,8 +9,8 @@ ARG "vcs_branch=unknown"
 ARG "vcs_ref=unknown"
 
 LABEL org.label-schema.vendor="Software Craftsmen Gmbh & Co KG" \
-    org.label-schema.name="jenkins-master" \
-    org.label-schema.description="Jenkins Master" \
+    org.label-schema.name="Atlassian Confluence" \
+    org.label-schema.description="Atlassian Confluence" \
     org.label-schema.usage="${vcs_url}" \
     org.label-schema.url="${vcs_url}" \
     org.label-schema.vcs-url=$vcs_url \
@@ -38,10 +38,12 @@ RUN ./atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin -q -varfile response.va
     rm atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin
 
 RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends gettext && \
+    apt-get install -y --no-install-recommends gettext xmlstarlet && \
     rm -rf /var/lib/apt/lists/*
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x docker-entrypoint.sh
+COPY configure-tomcat.sh configure-tomcat.sh
+
+RUN chmod +x docker-entrypoint.sh configure-tomcat.sh
 
 # HTTP port
 EXPOSE 8090
