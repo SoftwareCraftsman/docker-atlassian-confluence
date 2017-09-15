@@ -41,9 +41,9 @@ RUN apt-get update -y && \
     apt-get install -y --no-install-recommends gettext xmlstarlet && \
     rm -rf /var/lib/apt/lists/*
 COPY docker-entrypoint.sh /docker-entrypoint.sh
-COPY configure-tomcat.sh configure-tomcat.sh
+COPY configure-*.sh /
 
-RUN chmod +x docker-entrypoint.sh configure-tomcat.sh
+RUN chmod +x docker-entrypoint.sh configure-*.sh
 
 # HTTP port
 EXPOSE 8090

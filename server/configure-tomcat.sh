@@ -3,6 +3,13 @@
 set -x
 set -e
 
+#
+# Configure server.xml
+#
+# Parameter 1: the FQDN of the proxy server (e.g. confluence.software-craftsmen.at
+# Parameter 2: the context path (e.g. /confluence). If it is "/" the context will be assumed as ""
+# Parameter 3: the path of the tomcat configuration file (server.xml)
+#
 function configureTomcat {
     #https://confluence.atlassian.com/jirakb/integrating-jira-with-nginx-426115340.html
 
@@ -10,6 +17,10 @@ function configureTomcat {
     local proxyName=${1}
     local contextPath=${2}
     local tomcatServerXml=${3}
+
+    if [ "${contextPath}" == "/" ]; then
+         contextPath=""
+    fi
 
     xmlstarlet ed --pf --inplace --update Server/Service/Engine/Host/Context[1]/@path -v "${contextPath}" ${tomcatServerXml}
 

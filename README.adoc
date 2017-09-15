@@ -100,6 +100,6 @@ This requires a X.509 certificate subject to be configured.
 
 [source, bash]
 ----
-export X509_CERTIFICATE_SUBJECT=/C=AT/OU=Software Craftsmen Gmbh & CoKG/L=Vienna/emailAddress=office@software-craftsmen.at
+export X509_CERTIFICATE_SUBJECT="/C=AT/OU=Software Craftsmen Gmbh & CoKG/L=Vienna/emailAddress=office@software-craftsmen.at"
 docker-compose -f ssl-certificate.yml run generate-ssl-certificate
 ----
