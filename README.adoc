@@ -71,7 +71,7 @@ CONFLUENCE_CONTEXT_PATH=confluence <1>
 [source, bash]
 ----
 COMPOSE_FILE=docker-compose.yml:postgresdb.yml:nginx.yml
-NGINX_SERVER_NAME=qvv.software-craftsmen.at
+NGINX_SERVER_NAME=sub-domain.software-craftsmen.at
 NGINX_HTTP_PORT=80
 ----
 
@@ -79,7 +79,7 @@ NGINX_HTTP_PORT=80
 [source, bash]
 ----
 COMPOSE_FILE=docker-compose.yml:postgresdb.yml:nginx.yml:nginx-ssl.yml
-NGINX_SERVER_NAME=qvv.software-craftsmen.at
+NGINX_SERVER_NAME=sub-domain.software-craftsmen.at
 NGINX_HTTP_PORT=80
 NGINX_HTTPS_PORT=443
 ----
