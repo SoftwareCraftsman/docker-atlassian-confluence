@@ -1,12 +1,13 @@
 FROM softwarecraftsmen/oracle-java:8-jdk
 MAINTAINER Software Craftsmen GmbH & Co KG <office@software-craftsmen.at>
 
-ARG "version=unknown"
-ARG "build_date=unknown"
-ARG "commit_hash=unknown"
-ARG "vcs_url=unknown"
-ARG "vcs_branch=unknown"
-ARG "vcs_ref=unknown"
+ARG version="unknown"
+ARG build_date="unknown"
+ARG commit_hash="unknown"
+ARG vcs_url="unknown"
+ARG vcs_branch="unknown"
+ARG vcs_ref="unknown"
+ARG CONFLUENCE_VERSION
 
 LABEL org.label-schema.vendor="Software Craftsmen Gmbh & Co KG" \
     org.label-schema.name="Atlassian Confluence" \
@@ -25,7 +26,6 @@ RUN if [ ! "${http_proxy}" = "" ] ; then echo "Acquire::http::Proxy \"${http_pro
     if [ ! "${http_proxy}" = "" ] ; then echo "http_proxy=${http_proxy}" >> /etc/wgetrc; fi && \
     if [ ! "${https_proxy}" = "" ] ; then echo "https_proxy=${https_proxy}" >> /etc/wgetrc; fi
 
-ARG CONFLUENCE_VERSION=6.3.2
 
 RUN wget --no-verbose https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin -O atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin && \
     chmod a+x atlassian-confluence-${CONFLUENCE_VERSION}-x64.bin

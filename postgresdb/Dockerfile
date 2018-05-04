@@ -1,11 +1,11 @@
 FROM postgres:9.6
 
-ARG "version=unknown"
-ARG "build_date=unknown"
-ARG "commit_hash=unknown"
-ARG "vcs_url=unknown"
-ARG "vcs_branch=unknown"
-ARG "vcs_ref=unknown"
+ARG version="unknown"
+ARG build_date="unknown"
+ARG commit_hash="unknown"
+ARG vcs_url="unknown"
+ARG vcs_branch="unknown"
+ARG vcs_ref="unknown"
 
 LABEL org.label-schema.vendor="Software Craftsmen Gmbh & Co KG" \
     org.label-schema.name="jenkins-master" \

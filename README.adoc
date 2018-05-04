@@ -23,7 +23,7 @@ COMPOSE_FILE=docker-compose.yml:postgresdb.yml
 COMPOSE_HTTP_TIMEOUT=300
 
 CONFLUENCE_HTTP_PORT=18090
-CONFLUENCE_TAG=6.3.2
+CONFLUENCE_TAG=6.8.2
 CONFLUENCE_JDBC_USER=***
 CONFLUENCE_JDBC_PASSWORD=***
 
@@ -33,9 +33,13 @@ POSTGRES_PASSWORD=***
 
 == Build the image
 
+A locally built image `softwarecraftsmen/oracle-java:jdk-8` must be available.
+See https://bitbucket.org/SoftwareCraftsmen/docker-oracle-java8.
+
 [source, sh]
 ----
-docker-compose build
+export CONFLUENCE_TAG=6.8.2
+docker-compose build --build-arg CONFLUENCE_VERSION=6.8.2
 ----
 
 == Run a Confluence instance

@@ -1,4 +1,4 @@
-version: "2.1"
+version: "2.2"
 
 services:
   server:
@@ -8,7 +8,8 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
-    image: softwarecraftsmen/atlassian-confluence:${CONFLUENCE_TAG}
+        - CONFLUENCE_VERSION="6.3.2"
+    image: ${DOCKER_REGISTRY}atlassian-confluence:${CONFLUENCE_TAG}
     environment:
       - CONFLUENCE_JDBC_USER
       - CONFLUENCE_JDBC_PASSWORD
