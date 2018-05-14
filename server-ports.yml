@@ -1,0 +1,7 @@
+version: "2.2"
+
+services:
+  server:
+    ports:
+      - ${CONFLUENCE_HTTP_PORT}:8090
+      - ${CONFLUENCE_SYNCHRONY_PORT}:8091
