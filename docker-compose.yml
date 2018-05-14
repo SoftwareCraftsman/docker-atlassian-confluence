@@ -8,16 +8,17 @@ services:
         - http_proxy
         - https_proxy
         - no_proxy
-        - CONFLUENCE_VERSION="6.3.2"
+        - CONFLUENCE_VERSION=6.3.2
     image: ${DOCKER_REGISTRY}atlassian-confluence:${CONFLUENCE_TAG}
     environment:
       - CONFLUENCE_JDBC_USER
       - CONFLUENCE_JDBC_PASSWORD
       - CONFLUENCE_LICENSE
-      - NGINX_SERVER_NAME
       - CONFLUENCE_CONTEXT_PATH
+      - NGINX_SERVER_NAME
     ports:
       - ${CONFLUENCE_HTTP_PORT}:8090
+      - ${CONFLUENCE_SYNCHRONY_PORT}:8091
     restart: unless-stopped
     stop_grace_period: 1m0s
     healthcheck:
