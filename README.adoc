@@ -33,7 +33,7 @@ POSTGRES_PASSWORD=***
 
 == Build the image
 
-A locally built image `softwarecraftsmen/oracle-java:jdk-8` must be available.
+A locally built image `softwarecraftsmen/oracle-java:8-jdk` must be available.
 See https://bitbucket.org/SoftwareCraftsmen/docker-oracle-java8.
 
 [source, sh]
