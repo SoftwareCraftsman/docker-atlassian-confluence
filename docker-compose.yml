@@ -21,8 +21,7 @@ services:
     restart: unless-stopped
     stop_grace_period: 1m0s
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://server:8090/${CONFLUENCE_CONTEXT_PATH}"]
-      timeout: 5s
+      test: ["CMD", "curl", "--connect-timeout", "5", "-f", "http://server:8090/${CONFLUENCE_CONTEXT_PATH}"]
     volumes:
       - home:/var/atlassian/application-data/confluence
 
