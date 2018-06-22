@@ -15,5 +15,4 @@ services:
     depends_on:
       - server
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://proxy/${CONFLUENCE_CONTEXT_PATH}"]
-      timeout: 5s
+      test: ["CMD", "curl", "--connect-timeout", "5", "-f", "http://proxy/${CONFLUENCE_CONTEXT_PATH}"]
