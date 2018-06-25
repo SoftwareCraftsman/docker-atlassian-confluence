@@ -1,4 +1,4 @@
-FROM nginx:1.11
+FROM nginx:1.15
 MAINTAINER Software Craftsmen GmbH und CoKG <office@software-craftsmen.at>
 
 ARG version="unknown"
